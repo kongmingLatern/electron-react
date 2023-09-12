@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "dev": "sudo vite",
+    "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "preview": "vite preview",
     "pree2e": "vite build --mode=test",
@@ -22,7 +22,9 @@
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",
     "antd": "^5.9.0",
-    "electron-updater": "^6.1.1"
+    "electron-updater": "^6.1.1",
+    "react-speech-recognition": "^3.10.0",
+    "regenerator-runtime": "^0.14.0"
   },
   "electronDownload": {
     "mirror": "https://npm.taobao.org/mirrors/electron/"
@@ -32,6 +34,7 @@
     "@playwright/test": "^1.37.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "@types/react-speech-recognition": "^3.9.2",
     "@unocss/preset-attributify": "^0.55.7",
     "@unocss/preset-icons": "^0.55.7",
     "@unocss/reset": "^0.55.7",

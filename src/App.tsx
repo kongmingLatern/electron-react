@@ -1,6 +1,6 @@
 import LoginForm from './components/form/LoginForm'
 import { Icon } from '@iconify/react'
-import { Space } from 'antd'
+import Speech from './module/Speech'
 
 function App() {
 	console.log(
@@ -24,6 +24,8 @@ function App() {
 				</h3>
 				<LoginForm />
 			</div>
+
+			<Speech />
 		</>
 	)
 }
