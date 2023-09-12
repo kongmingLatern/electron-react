@@ -10,6 +10,7 @@ export default defineConfig({
 		presetIcons(),
 	],
 	shortcuts: {
+		'flex-center': 'flex justify-center items-center',
 		'absolute-center':
 			'absolute left-50% top-50% translate-x-[-50%] translate-y-[-50%]',
 	},

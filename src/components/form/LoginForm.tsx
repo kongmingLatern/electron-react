@@ -1,5 +1,11 @@
 import React from 'react'
-import { Button, Space, Form, Input } from 'antd'
+import {
+	Button,
+	Space,
+	Form,
+	Input,
+	Typography,
+} from 'antd'
 
 const onFinish = (values: any) => {
 	console.log('Success:', values)
@@ -32,6 +38,7 @@ const App: React.FC = () => (
 			wrapperCol={{ pull: 3 }}
 			label="直播间Id"
 			name="roomId"
+			className="w-400px select-none"
 		>
 			<Input />
 		</Form.Item>
@@ -41,20 +48,23 @@ const App: React.FC = () => (
 			wrapperCol={{ pull: 3 }}
 			label="认证密钥"
 			name="password"
+			className="w-400px select-none"
 		>
 			<Input.Password />
 		</Form.Item>
 
-		<Form.Item wrapperCol={{ offset: 7, span: 20 }}>
-			<Space size={24}>
-				<Button type="default" htmlType="submit">
-					注册
-				</Button>
-				<Button type="default" htmlType="submit">
-					连接
-				</Button>
-			</Space>
-		</Form.Item>
+		<Space
+			size={24}
+			className="mb-4 w-full justify-between"
+			align="center"
+		>
+			<Typography.Text className="color-blue cursor-pointer">
+				没有密钥?点击申请
+			</Typography.Text>
+			<Button type="default" htmlType="submit">
+				连接
+			</Button>
+		</Space>
 	</Form>
 )
 

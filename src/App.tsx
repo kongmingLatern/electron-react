@@ -1,4 +1,6 @@
 import LoginForm from './components/form/LoginForm'
+import { Icon } from '@iconify/react'
+import { Space } from 'antd'
 
 function App() {
 	console.log(
@@ -7,17 +9,21 @@ function App() {
 	)
 	return (
 		<>
-			<div className="bg-blue-300 rounded w-400px absolute-center">
-				<h3 className="text-center bg-#00AEEC color-white">
-					Bilibili Helper
+			<div className="bg-white overflow-hidden rounded-lg w-400px absolute-center rounded">
+				<h3 className="flex-center text-center bg-#00AEEC color-white h-40px lh-40px">
+					<Icon
+						icon="fa6-brands:bilibili"
+						className="mr-2"
+						width={30}
+						height={30}
+						color="#fff"
+					/>
+					<span className="select-none">
+						哔哩哔哩直播助手
+					</span>
 				</h3>
 				<LoginForm />
 			</div>
-			{/* <header className='mb-2'>
-				<h3 className="text-center bg-#00AEEC color-white">
-					Bilibili Helper
-				</h3>
-			</header> */}
 		</>
 	)
 }
