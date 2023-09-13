@@ -2,12 +2,7 @@ import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 import { message } from 'antd'
 import Speech from './module/Speech'
-import {
-	ScanReturnType,
-	getQrCodeInfo,
-	scanQrCode,
-} from '@/module/scan'
-import { get } from './api'
+import { getQrCodeInfo, scanQrCode } from '@/module/scan'
 
 function App() {
 	const [url, setUrl] = useState('')
