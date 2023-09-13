@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Session } from '@nestjs/common';
 import { AppService } from './app.service';
 import axios from 'axios';
 import { getMsgByCode } from './shared';
@@ -20,7 +20,7 @@ export class AppController {
   }
 
   @Get('/scan')
-  async getLogin(@Query('qrcode_key') qrcode_key: string) {
+  async getLogin(@Query('qrcode_key') qrcode_key: string, @Session() session) {
     const res = await axios
       .get('https://passport.bilibili.com/x/passport-login/web/qrcode/poll', {
         params: {
@@ -29,6 +29,8 @@ export class AppController {
       })
       .catch((e) => e);
     const { data } = res.data;
+
+    console.log(session);
 
     return new R(data.code, getMsgByCode(data.code), data);
   }
