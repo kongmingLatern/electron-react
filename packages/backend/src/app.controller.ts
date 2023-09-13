@@ -21,7 +21,6 @@ export class AppController {
 
   @Get('/scan')
   async getLogin(@Query('qrcode_key') qrcode_key: string) {
-    console.log('qrcode_key', qrcode_key);
     const res = await axios
       .get('https://passport.bilibili.com/x/passport-login/web/qrcode/poll', {
         params: {
