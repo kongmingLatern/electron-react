@@ -84,12 +84,11 @@ export default defineConfig(({ command }) => {
 			port: 8000,
 			origin: 'http://localhost:8000',
 			proxy: {
-				'/x': {
+				'/api': {
 					// 这里配置要代理的路径前缀
-					target: 'https://passport.bilibili.com', // 设置目标地址
+					target: 'http://localhost:3000/api', // 设置目标地址
 					changeOrigin: true, // 将请求头中的host设置为target的域名
-					secure: false, // 如果目标是https，需要设置为false
-					rewrite: path => path.replace(/^\/x/, ''), // 可选，重写路径，例如去掉前缀
+					rewrite: path => path.replace(/^\/api/, ''), // 可选，重写路径，例如去掉前缀
 				},
 			},
 		},
