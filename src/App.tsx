@@ -1,12 +1,41 @@
-import LoginForm from './components/form/LoginForm'
 import { Icon } from '@iconify/react'
+import { useEffect, useState } from 'react'
+import { message } from 'antd'
 import Speech from './module/Speech'
+import {
+	ScanReturnType,
+	getQrCodeInfo,
+	scanQrCode,
+} from '@/module/scan'
+import { get } from './api'
 
 function App() {
-	console.log(
-		'[App.tsx]',
-		`Hello world from Electron ${process.versions.electron}!`
-	)
+	const [url, setUrl] = useState('')
+	const [codeKey, setCodeKey] = useState('')
+
+	console.log(`Electron ${process.versions.electron}!`)
+
+	async function getInfo() {
+		const { url, qrcode_key } = await getQrCodeInfo()
+		setUrl(url)
+		setCodeKey(qrcode_key)
+	}
+
+	useEffect(() => {
+		getInfo()
+	}, [])
+
+	useEffect(() => {
+		const timer = setInterval(async () => {
+			const res = await scanQrCode(codeKey)
+			if (res.code === 0) {
+				message.success(res.msg)
+				clearInterval(timer)
+			}
+		}, 5000)
+		return () => clearInterval(timer)
+	}, [codeKey])
+
 	return (
 		<>
 			<div className="bg-white overflow-hidden rounded-lg w-400px absolute-center rounded">
@@ -22,10 +51,11 @@ function App() {
 						哔哩哔哩直播助手
 					</span>
 				</h3>
-				<LoginForm />
+				{/* <LoginForm /> */}
 			</div>
 
 			<Speech />
+			<img src={url} />
 		</>
 	)
 }
