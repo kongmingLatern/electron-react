@@ -9,7 +9,7 @@
 	},
 	electronDownload: {
 		mirror: 'https://npm.taobao.org/mirrors/electron/',
-		platform: 'win32',
+		platform: 'darwin',
 	},
 	files: ['dist-electron', 'dist'],
 	mac: {

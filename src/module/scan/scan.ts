@@ -35,6 +35,9 @@ export const scanQrCode = async (qrcode_key: string) => {
 			qrcode_key,
 		}
 	)
-	sessionStorage.setItem('SESSDATA', res.data.sessionData)
+	sessionStorage.setItem('SESSDATA', res.data.SESSDATA)
+	sessionStorage.setItem('bili_jct', res.data.bili_jct)
+	sessionStorage.setItem('DedeUserID', res.data.DedeUserID)
+	sessionStorage.setItem('sid', res.data.sid)
 	return res
 }

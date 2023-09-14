@@ -7,6 +7,14 @@ export interface QrCodeInfoType {
 	ttl: number
 }
 
+interface HeaderOptions {
+	SESSDATA: string
+	bili_jct: string
+	DedeUserID: string
+	DedeUserID__ckMd5: string
+	sid: string
+}
+
 export interface ScanDataType {
 	code: ScanCode
 	message: string
@@ -19,5 +27,5 @@ export interface ScanDataType {
 export interface ScanReturnType {
 	code: ScanCode
 	msg: string
-	data: ScanDataType
+	data: ScanDataType & HeaderOptions
 }
