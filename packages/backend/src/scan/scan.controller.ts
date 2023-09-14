@@ -3,6 +3,7 @@ import { ScanService } from './scan.service';
 import axios from 'axios';
 import { R } from 'src/common/R';
 import { getMsgByCode } from 'src/shared';
+import { urls } from 'src/api/urls';
 
 @Controller('scan')
 export class ScanController {
@@ -10,16 +11,14 @@ export class ScanController {
 
   @Get('/getQrcode')
   async getQrcode(): Promise<string> {
-    const res = await axios.get(
-      'http://passport.bilibili.com/x/passport-login/web/qrcode/generate',
-    );
+    const res = await axios.get(urls.scan.getQrcode);
     return res.data;
   }
 
   @Get('/scanQrcode')
   async scanQrcode(@Query('qrcode_key') qrcode_key: string) {
     const res = await axios
-      .get('https://passport.bilibili.com/x/passport-login/web/qrcode/poll', {
+      .get(urls.scan.scanQrcode, {
         params: {
           qrcode_key,
         },
