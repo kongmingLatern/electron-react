@@ -18,6 +18,9 @@ async function bootstrap() {
       secret: 'syj',
       resave: false,
       saveUninitialized: false,
+      cookie: {
+        maxAge: 100000,
+      },
     }),
   );
   app.use(cookieParser());
