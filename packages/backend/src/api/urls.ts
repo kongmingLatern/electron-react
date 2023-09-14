@@ -7,6 +7,7 @@ export const urls = {
       'https://passport.bilibili.com/x/passport-login/web/qrcode/poll',
   },
   user: {
+    // NOTE: https://socialsisteryi.github.io/bilibili-API-collect/docs/user/info.html#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF
     getUserCard: 'https://api.bilibili.com/x/web-interface/card',
   },
 
