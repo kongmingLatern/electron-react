@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
-import { message } from 'antd'
+import { Button, message } from 'antd'
 import Speech from './module/Speech'
 import { getQrCodeInfo, scanQrCode } from '@/module/scan'
+import { get } from './api'
 
 function App() {
 	const [url, setUrl] = useState('')
@@ -48,6 +49,8 @@ function App() {
 				</h3>
 				{/* <LoginForm /> */}
 			</div>
+
+			<Button onClick={() => get('/test')}>发送请求</Button>
 
 			<Speech />
 			<img src={url} />

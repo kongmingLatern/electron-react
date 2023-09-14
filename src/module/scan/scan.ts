@@ -11,10 +11,19 @@ interface QrCodeInfoType {
 	ttl: number
 }
 
+interface ScanDataType {
+	code: ScanCode
+	message: string
+	refresh_token: string
+	sessionData: string
+	timestamp: string
+	url: string
+}
+
 interface ScanReturnType {
 	code: ScanCode
 	msg: string
-	data: Record<string, any> | Array<Record<string, any>>
+	data: ScanDataType
 }
 
 export async function getQrCodeInfo() {
@@ -45,5 +54,6 @@ export const scanQrCode = async (qrcode_key: string) => {
 	const res = await get<ScanReturnType>('/scan', {
 		qrcode_key,
 	})
+	sessionStorage.setItem('SESSDATA', res.data.sessionData)
 	return res
 }
