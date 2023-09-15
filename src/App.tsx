@@ -1,19 +1,18 @@
 import { Icon } from '@iconify/react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, message } from 'antd'
 import Speech from './module/Speech'
 import { getQrCodeInfo, scanQrCode } from '@/module/scan'
 import { KeepLiveWS } from 'bilibili-live-ws'
 import { createLiveConnect } from './module/connect'
-import DanmakuList from './pages/DanmakuList'
-import { flushSync } from 'react-dom'
+import DanmakuList, { ItemProps } from './pages/DanmakuList'
 
 function App() {
 	const [url, setUrl] = useState('')
 	const [codeKey, setCodeKey] = useState('')
 	const [live, setLive] = useState({} as KeepLiveWS)
-	const danmakuList = []
-	const [list, setList] = useState([])
+	const danmakuList: Partial<ItemProps>[] = []
+	const [list, setList] = useState<Partial<ItemProps>[]>([])
 
 	function connect() {
 		const live = createLiveConnect(
@@ -23,13 +22,16 @@ function App() {
 				roomId: 923833,
 			},
 			{
-				DANMU_MSG: data => {
-					const { info } = data
-					const content = info[1]
-					const name = info[2][1]
+				LIVE_INTERACTIVE_GAME: res => {
+					const { data } = res
+					const content = data.msg
+					const name = data.uname
+					const uid = data.uid
 					danmakuList.push({
 						content,
 						name,
+						time: new Date().getTime(),
+						uid,
 					})
 					setList([...danmakuList])
 				},
@@ -81,6 +83,7 @@ function App() {
 
 			<Button onClick={() => connect()}>连接</Button>
 			<Button onClick={() => live.close()}>断开</Button>
+			<Button onClick={() => setList([])}>清空弹幕</Button>
 
 			<Speech />
 

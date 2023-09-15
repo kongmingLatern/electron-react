@@ -1,44 +1,21 @@
 import Item from '@/components/Item'
 
-export default function DanmakuList(props) {
-	const Items = [
-		{
-			avatar:
-				'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1',
-			name: '凤之兮原',
-			time:
-				new Date().getHours() +
-				':' +
-				new Date().getMinutes(),
-			content: '啦啦啦',
-		},
-		{
-			avatar:
-				'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1',
-			name: '凤之兮原',
-			time:
-				new Date().getHours() +
-				':' +
-				new Date().getMinutes(),
-			content: '啦啦啦',
-		},
-		{
-			avatar:
-				'https://xsgames.co/randomusers/avatar.php?g=pixel&key=1',
-			name: '凤之兮原',
-			time:
-				new Date().getHours() +
-				':' +
-				new Date().getMinutes(),
-			content: '啦啦啦',
-		},
-	]
+export interface ItemProps {
+	uid: string
+	avatar: string
+	name: string
+	time: number
+	content: string
+}
 
+export default function DanmakuList(props) {
 	return (
 		<ul>
-			{props.danmakuList.map((i, index) => (
-				<Item key={index} {...i} />
-			))}
+			{props.danmakuList.map(
+				(i: Partial<ItemProps>, index) => (
+					<Item key={index} {...i} />
+				)
+			)}
 		</ul>
 	)
 }
