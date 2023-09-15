@@ -1,0 +1,13 @@
+@keyframes slideFromBottom {
+	from {
+		transform: translateX(10%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+.slide-up-animation {
+	animation: slideFromBottom 0.5s ease-in-out;
+}
