@@ -8,14 +8,13 @@ export interface ItemProps {
 	avatar: string
 	name: string
 	time: number
-	content: string
+	content: string | React.ReactNode
 }
 
 export default function DanmakuList(props) {
 	const containerRef = useRef(null)
 	const [isOverflow, setIsOverflow] = useState(false)
 	const [mouseOver, setMouseOver] = useState(false)
-	const [scrollDistance, setScrollDistance] = useState(0)
 	let timer
 
 	useEffect(() => {
@@ -80,9 +79,6 @@ export default function DanmakuList(props) {
 				className="p-0 m-0"
 				style={{
 					transition: 'all .5s',
-					transform: `translateY(${
-						!mouseOver && isOverflow ? '100%' : ''
-					})`,
 				}}
 			>
 				{props.danmakuList.map(
