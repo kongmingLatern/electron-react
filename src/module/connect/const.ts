@@ -91,4 +91,6 @@ export const enum CMD {
 	 * @param 下播直播间
 	 */
 	STOP_LIVE_ROOM_LIST = 'STOP_LIVE_ROOM_LIST',
+
+	LIVE_INTERACTIVE_GAME = 'LIVE_INTERACTIVE_GAME',
 }

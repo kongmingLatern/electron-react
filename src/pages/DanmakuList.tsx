@@ -1,6 +1,8 @@
 import Item from '@/components/Item'
+import { CMD } from '@/module/connect/const'
 
 export interface ItemProps {
+	type?: CMD
 	uid: string
 	avatar: string
 	name: string
