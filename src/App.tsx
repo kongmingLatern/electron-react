@@ -4,12 +4,23 @@ import { Button, message } from 'antd'
 import Speech from './module/Speech'
 import { getQrCodeInfo, scanQrCode } from '@/module/scan'
 import { get } from './api'
+import { KeepLiveWS } from 'bilibili-live-ws'
+import { createLiveConnect } from './module/connect'
 
 function App() {
 	const [url, setUrl] = useState('')
 	const [codeKey, setCodeKey] = useState('')
+	const [live, setLive] = useState({} as KeepLiveWS)
 
-	console.log(`Electron ${process.versions.electron}!`)
+	function connect() {
+		const live = createLiveConnect({
+			roomId: 1007329,
+		})
+		console.log('live', live)
+		setLive(live)
+	}
+
+	// console.log(`Electron ${process.versions.electron}!`)
 
 	async function getInfo() {
 		const { url, qrcode_key } = await getQrCodeInfo()
@@ -17,20 +28,20 @@ function App() {
 		setCodeKey(qrcode_key)
 	}
 
-	useEffect(() => {
-		getInfo()
-	}, [])
+	// useEffect(() => {
+	// 	getInfo()
+	// }, [])
 
-	useEffect(() => {
-		const timer = setInterval(async () => {
-			const res = await scanQrCode(codeKey)
-			if (res.code === 0) {
-				message.success(res.msg)
-				clearInterval(timer)
-			}
-		}, 5000)
-		return () => clearInterval(timer)
-	}, [codeKey])
+	// useEffect(() => {
+	// 	const timer = setInterval(async () => {
+	// 		const res = await scanQrCode(codeKey)
+	// 		if (res.code === 0) {
+	// 			message.success(res.msg)
+	// 			clearInterval(timer)
+	// 		}
+	// 	}, 5000)
+	// 	return () => clearInterval(timer)
+	// }, [codeKey])
 
 	return (
 		<>
@@ -50,7 +61,8 @@ function App() {
 				{/* <LoginForm /> */}
 			</div>
 
-			<Button onClick={() => get('/test')}>发送请求</Button>
+			<Button onClick={() => connect()}>连接</Button>
+			<Button onClick={() => live.close()}>断开</Button>
 
 			<Speech />
 			<img src={url} />
