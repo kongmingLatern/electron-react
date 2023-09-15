@@ -1,22 +1,40 @@
 import { Icon } from '@iconify/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button, message } from 'antd'
 import Speech from './module/Speech'
 import { getQrCodeInfo, scanQrCode } from '@/module/scan'
-import { get } from './api'
 import { KeepLiveWS } from 'bilibili-live-ws'
 import { createLiveConnect } from './module/connect'
+import DanmakuList from './pages/DanmakuList'
+import { flushSync } from 'react-dom'
 
 function App() {
 	const [url, setUrl] = useState('')
 	const [codeKey, setCodeKey] = useState('')
 	const [live, setLive] = useState({} as KeepLiveWS)
+	const danmakuList = []
+	const [list, setList] = useState([])
 
 	function connect() {
-		const live = createLiveConnect({
-			roomId: 1007329,
-		})
-		console.log('live', live)
+		const live = createLiveConnect(
+			{
+				// roomId: 1007329,
+				// roomId: 22021613,
+				roomId: 923833,
+			},
+			{
+				DANMU_MSG: data => {
+					const { info } = data
+					const content = info[1]
+					const name = info[2][1]
+					danmakuList.push({
+						content,
+						name,
+					})
+					setList([...danmakuList])
+				},
+			}
+		)
 		setLive(live)
 	}
 
@@ -65,6 +83,9 @@ function App() {
 			<Button onClick={() => live.close()}>断开</Button>
 
 			<Speech />
+
+			<DanmakuList danmakuList={list} />
+
 			<img src={url} />
 		</>
 	)
