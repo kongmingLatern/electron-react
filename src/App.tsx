@@ -41,9 +41,16 @@ function App() {
 						avatar: face,
 						name: uname,
 						type: CMD.SEND_GIFT,
-						content: `${uname}${action}给${[
-							name,
-						]}: ${giftName}\n 数量: ${combo_stay_time}`,
+						content: (
+							<span className="text-white font-bold font-lg">
+								<span className="color-yellow">{`[${uname}]`}</span>
+								{`${action}给[${[name]}]`}
+								<br />
+								<span className="color-blue">
+									{` ${giftName}\n 数量: ${combo_stay_time}`}
+								</span>
+							</span>
+						),
 						time: new Date().getTime(),
 					})
 
@@ -51,15 +58,23 @@ function App() {
 				},
 				ENTRY_EFFECT: res => {
 					const { face, uid, copy_writing } = res.data
+					const content = copy_writing
+						.replaceAll('<', '')
+						.replaceAll('>', '')
+						.replaceAll('%', '')
+					const name = content.split(' ')[1]
 					danmakuList.push({
 						uid,
 						avatar: face,
 						name: '[自动触发]',
 						type: CMD.ENTRY_EFFECT,
-						content: copy_writing
-							.replace('<', '')
-							.replace('>', '')
-							.replace('%', ''),
+						content: (
+							<span className="text-white font-bold font-lg">
+								欢迎{' '}
+								<span className="color-yellow">{name}</span>{' '}
+								进入直播间!
+							</span>
+						),
 						time: new Date().getTime(),
 					})
 					setList([...danmakuList])
@@ -120,7 +135,7 @@ function App() {
 
 	return (
 		<>
-			<div className="bg-white overflow-hidden rounded-lg w-400px absolute-center rounded">
+			{/* <div className="bg-white overflow-hidden rounded-lg w-400px absolute-center rounded">
 				<h3 className="flex-center text-center bg-#00AEEC color-white h-40px lh-40px">
 					<Icon
 						icon="fa6-brands:bilibili"
@@ -133,13 +148,14 @@ function App() {
 						哔哩哔哩直播助手
 					</span>
 				</h3>
-				{/* <LoginForm /> */}
-			</div>
+
+				<LoginForm />
+			</div> */}
 
 			<InputNumber
 				className="flex w-200px"
 				placeholder="请输入直播间id"
-				defaultValue={30639870}
+				defaultValue={4245963}
 				onBlur={e => {
 					setRoomId(Number(e.target.value))
 				}}
@@ -147,9 +163,16 @@ function App() {
 
 			<Button onClick={() => connect()}>连接</Button>
 			<Button onClick={() => live.close()}>断开</Button>
-			<Button onClick={() => setList([])}>清空弹幕</Button>
+			<Button
+				onClick={() => {
+					setList([])
+					danmakuList.length = 0
+				}}
+			>
+				清空弹幕
+			</Button>
 
-			<Speech />
+			{/* <Speech /> */}
 
 			<DanmakuList danmakuList={list} />
 
