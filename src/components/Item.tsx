@@ -1,5 +1,6 @@
 import { CMD } from '@/module/connect/const'
 import { ItemProps } from '@/pages/DanmakuList'
+import '@/assets/animation.scss'
 
 export default function Item(props: Partial<ItemProps>) {
 	const { type, avatar, name, time, content } = props
@@ -39,7 +40,7 @@ export default function Item(props: Partial<ItemProps>) {
 	}
 
 	return (
-		<li>
+		<li className="flex flex-col slide-up-animation">
 			<div className="chat chat-start">
 				<div className="chat-image avatar">
 					<div className="w-10 rounded-full">
@@ -56,7 +57,7 @@ export default function Item(props: Partial<ItemProps>) {
 							formatFn(seconds)}
 					</time>
 				</div>
-				<div className={`chat-bubble`} style={handleType()}>
+				<div className={`chat-bubble max-w-[500px] flex flex-wrap`} style={handleType()}>
 					{content}
 				</div>
 			</div>
