@@ -14,26 +14,12 @@ export default function Card(props) {
 		content,
 	} = props
 
-	useEffect(() => {
-		async function getImg() {
-			console.log('uid', uid)
-			if (uid) {
-				const res = await getFace(186887073)
-				console.log('res', res)
-				return res
-			} else {
-				return ''
-			}
-		}
-		getImg()
-	}, [])
-
 	return (
 		<div className="mt-1rem rounded-lg ml-0.5rem overflow-hidden card w-96 bg-base-100 shadow-xl bg-red-500 mb-2">
 			<header className="bg-red-800 color-white text-center font-bold">
 				{name}
 			</header>
-			<figure className='mt-1rem'>
+			<figure className="mt-1rem">
 				<img src={cover} alt={'头像'} width={100} />
 			</figure>
 			<div className="card-body p-0 my-1rem">

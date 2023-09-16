@@ -7,6 +7,7 @@ import Card from './Card'
 import Avatar from '@/assets/avatar.jpeg'
 import Call from '@/assets/call.png'
 import Love from '@/assets/love.png'
+import Wa from '@/assets/wa.png'
 
 export default function Item(props: Partial<ItemProps>) {
 	const { uid, type, avatar, name, time, content } = props
@@ -68,8 +69,19 @@ export default function Item(props: Partial<ItemProps>) {
 				<Card
 					{...{
 						...props,
+						avatar,
 						name: '感谢礼物',
 						cover: Love,
+					}}
+				/>
+			)}
+			{type === CMD.SUPER_CHAT_MESSAGE && (
+				<Card
+					{...{
+						...props,
+						avatar,
+						name: '醒目留言',
+						cover: Wa,
 					}}
 				/>
 			)}

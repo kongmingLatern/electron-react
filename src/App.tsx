@@ -7,16 +7,21 @@ import { KeepLiveWS } from 'bilibili-live-ws'
 import { createLiveConnect } from './module/connect'
 import DanmakuList, { ItemProps } from './pages/DanmakuList'
 import { CMD } from './module/connect/const'
+import AvatarImg from './components/AvatarImg'
 
 function App() {
 	const [url, setUrl] = useState('')
 	const [codeKey, setCodeKey] = useState('')
 	const [live, setLive] = useState({} as KeepLiveWS)
 	const danmakuList: Partial<ItemProps>[] = []
-	const liveInteractiveGame: Partial<ItemProps>[] = []
 	const [list, setList] = useState<Partial<ItemProps>[]>([])
 	const [roomId, setRoomId] = useState<number>(0)
-	const [total, setTotal] = useState(0)
+	let total = 0
+
+	function reset() {
+		danmakuList.length = 0
+		setList([])
+	}
 
 	function connect() {
 		const live = createLiveConnect(
@@ -39,8 +44,7 @@ function App() {
 					} = res.data
 
 					const { uname: name } = receive_user_info
-
-					setTotal(total + total_coin / 100)
+					total += total_coin / 100
 
 					danmakuList.push({
 						uid,
@@ -50,6 +54,7 @@ function App() {
 						money: total_coin / 100,
 						content: (
 							<span className="text-white font-bold font-lg">
+								<AvatarImg avatar={face} />
 								<span className="color-yellow">{`[${uname}]`}</span>
 								{`${action}给[${[name]}]`}
 								<br />
@@ -67,6 +72,7 @@ function App() {
 							</span>
 						),
 						time: new Date().getTime(),
+						total,
 					})
 
 					setList([...danmakuList])
@@ -81,16 +87,24 @@ function App() {
 						type: CMD.ENTRY_EFFECT,
 						content: (
 							<span className="text-white font-bold font-lg">
-								欢迎{' '}
-								<span className="color-yellow">{name}</span>{' '}
+								欢迎 <AvatarImg avatar={face} />
+								<span className="color-yellow">
+									{name}
+								</span>{' '}
 								进入直播间!
 							</span>
 						),
 						time: new Date().getTime(),
+						total,
 					})
 					setList([...danmakuList])
 				},
 				DANMU_MSG: res => {
+					// 如果弹幕超过300,则清空弹幕,释放空间
+					if (danmakuList.length >= 300) {
+						reset()
+					}
+
 					const { info } = res
 					const content = info[1]
 					const name = info[2][1]
@@ -99,6 +113,41 @@ function App() {
 						content,
 						name,
 						time: new Date().getTime(),
+						total,
+					})
+					setList([...danmakuList])
+				},
+				SUPER_CHAT_MESSAGE: res => {
+					const {
+						price,
+						background_color,
+						background_price_color,
+						message,
+						user_info,
+						end_time,
+						uid,
+					} = res.data
+
+					danmakuList.push({
+						type: CMD.SUPER_CHAT_MESSAGE,
+						uid,
+						avatar: user_info.face,
+						content: (
+							<span
+								style={{
+									color: 'white',
+									background: background_color,
+								}}
+							>
+								{`${user_info.uname}留言说: ${message}`}
+							</span>
+						),
+						name: user_info.uname,
+						time: new Date().getTime(),
+						money: price,
+						background_price_color,
+						end_time,
+						total,
 					})
 					setList([...danmakuList])
 				},
@@ -186,7 +235,10 @@ function App() {
 
 			{/* <Speech /> */}
 
-			<DanmakuList total={total} danmakuList={list} />
+			<DanmakuList
+				total={list[list.length - 1]?.total || 0}
+				danmakuList={list}
+			/>
 
 			<img src={url} />
 		</>

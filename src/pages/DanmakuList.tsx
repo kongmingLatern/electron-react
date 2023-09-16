@@ -12,6 +12,9 @@ export interface ItemProps {
 	time: number
 	content: string | React.ReactNode
 	money?: number
+	background_price_color?: string
+	end_time?: number
+	total?: number
 }
 
 export default function DanmakuList(props) {
@@ -68,7 +71,7 @@ export default function DanmakuList(props) {
 	return (
 		<div
 			ref={containerRef}
-			className={`relative max-h-[700px] min-h-[700px] cover border ${
+			className={`relative max-w-[600px] min-w-[600px] max-h-[700px] min-h-[700px] cover border ${
 				isOverflow ? 'overflow-y-scroll' : ''
 			}`}
 			onMouseOver={() => {
@@ -78,7 +81,12 @@ export default function DanmakuList(props) {
 				setMouseOver(false)
 			}}
 		>
-			<RankHeader total={props.total} />
+			<RankHeader
+				total={props.total}
+				chatList={(props.danmakuList as ItemProps[]).filter(
+					i => i.type === CMD.SUPER_CHAT_MESSAGE
+				)}
+			/>
 			<ul
 				className="p-0 m-0"
 				style={{

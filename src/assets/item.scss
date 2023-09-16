@@ -1,0 +1,8 @@
+.background {
+	background: rgb(255 255 255 / 20%);
+	backdrop-filter: blur(15px);
+}
+.cover {
+	background: url('./background.jpeg');
+	background-size: cover;
+}
