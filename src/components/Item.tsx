@@ -1,13 +1,15 @@
 import { CMD } from '@/module/connect/const'
+import { getFace } from '@/utils'
 import { ItemProps } from '@/pages/DanmakuList'
 import '@/assets/animation.scss'
+import '@/assets/item.scss'
 import Card from './Card'
 import Avatar from '@/assets/avatar.jpeg'
 import Call from '@/assets/call.png'
 import Love from '@/assets/love.png'
 
 export default function Item(props: Partial<ItemProps>) {
-	const { type, avatar, name, time, content } = props
+	const { uid, type, avatar, name, time, content } = props
 	const date = new Date(time as number)
 	const hours = date.getHours()
 	const mins = date.getMinutes()
@@ -44,14 +46,21 @@ export default function Item(props: Partial<ItemProps>) {
 		}
 	}
 
+	const getImg = () => {
+		if (avatar && uid) {
+			return getFace(uid)
+		}
+		return Avatar
+	}
+
 	return (
-		<li className="max-w-[500px] flex flex-col slide-up-animation">
+		<li className="max-w-[500px] flex flex-col slide-up-animation ">
 			{type === CMD.ENTRY_EFFECT && (
 				<Card
 					{...{
 						...props,
 						name: '[三月] 直播间舰长专属弹幕',
-						avatar: Call,
+						cover: Call,
 					}}
 				/>
 			)}
@@ -60,18 +69,18 @@ export default function Item(props: Partial<ItemProps>) {
 					{...{
 						...props,
 						name: '感谢礼物',
-						avatar: Love,
+						cover: Love,
 					}}
 				/>
 			)}
 			{type === CMD.DANMU_MSG && (
-				<div className="chat chat-start">
+				<div className="chat chat-start ">
 					<div className="chat-image avatar">
 						<div className="w-10 rounded-full">
 							<img src={Avatar} />
 						</div>
 					</div>
-					<div className="chat-header">
+					<div className="color-white chat-header">
 						{name}{' '}
 						<time className="text-xs opacity-50">
 							{formatFn(hours) +
@@ -82,7 +91,7 @@ export default function Item(props: Partial<ItemProps>) {
 						</time>
 					</div>
 					<div
-						className={`chat-bubble max-w-[500px] flex flex-wrap`}
+						className={`max-w-[400px] color-white rounded-15px px-20px h-40px lh-40px overflow-hidden flex flex-wrap background`}
 						style={handleType()}
 					>
 						{content}

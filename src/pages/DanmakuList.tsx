@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import Item from '@/components/Item'
 import { CMD } from '@/module/connect/const'
+import '@/assets/item.scss'
+import RankHeader from '@/components/RankHeader'
 
 export interface ItemProps {
 	type?: CMD
-	uid: string
+	uid: number
 	avatar: string
 	name: string
 	time: number
 	content: string | React.ReactNode
+	money?: number
 }
 
 export default function DanmakuList(props) {
@@ -65,7 +68,7 @@ export default function DanmakuList(props) {
 	return (
 		<div
 			ref={containerRef}
-			className={`max-h-[700px] min-h-[700px] border ${
+			className={`relative max-h-[700px] min-h-[700px] cover border ${
 				isOverflow ? 'overflow-y-scroll' : ''
 			}`}
 			onMouseOver={() => {
@@ -75,6 +78,7 @@ export default function DanmakuList(props) {
 				setMouseOver(false)
 			}}
 		>
+			<RankHeader total={props.total} />
 			<ul
 				className="p-0 m-0"
 				style={{

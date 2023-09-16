@@ -16,6 +16,7 @@ function App() {
 	const liveInteractiveGame: Partial<ItemProps>[] = []
 	const [list, setList] = useState<Partial<ItemProps>[]>([])
 	const [roomId, setRoomId] = useState<number>(0)
+	const [total, setTotal] = useState(0)
 
 	function connect() {
 		const live = createLiveConnect(
@@ -27,27 +28,41 @@ function App() {
 			{
 				SEND_GIFT: res => {
 					const {
+						uid,
 						face,
 						giftName,
 						receive_user_info,
 						uname,
 						action,
-						combo_stay_time,
+						total_coin,
+						num,
 					} = res.data
 
 					const { uname: name } = receive_user_info
 
+					setTotal(total + total_coin / 100)
+
 					danmakuList.push({
+						uid,
 						avatar: face,
 						name: uname,
 						type: CMD.SEND_GIFT,
+						money: total_coin / 100,
 						content: (
 							<span className="text-white font-bold font-lg">
 								<span className="color-yellow">{`[${uname}]`}</span>
 								{`${action}给[${[name]}]`}
 								<br />
 								<span className="color-blue">
-									{` ${giftName}\n 数量: ${combo_stay_time}`}
+									<span className="color-yellow">{`${giftName}`}</span>
+									{`  * ${num}`}
+								</span>
+								<br />
+								<span className="color-yellow">
+									<span className="color-white">
+										总价值:
+									</span>
+									{` ${total_coin / 100} 电池 `}
 								</span>
 							</span>
 						),
@@ -58,11 +73,7 @@ function App() {
 				},
 				ENTRY_EFFECT: res => {
 					const { face, uid, copy_writing } = res.data
-					const content = copy_writing
-						.replaceAll('<', '')
-						.replaceAll('>', '')
-						.replaceAll('%', '')
-					const name = content.split(' ')[1]
+					const name = /<%(.*?)%>/g.exec(copy_writing)?.[1]
 					danmakuList.push({
 						uid,
 						avatar: face,
@@ -155,7 +166,8 @@ function App() {
 			<InputNumber
 				className="flex w-200px"
 				placeholder="请输入直播间id"
-				defaultValue={4245963}
+				// defaultValue={4245963}
+				defaultValue={23271282}
 				onBlur={e => {
 					setRoomId(Number(e.target.value))
 				}}
@@ -174,7 +186,7 @@ function App() {
 
 			{/* <Speech /> */}
 
-			<DanmakuList danmakuList={list} />
+			<DanmakuList total={total} danmakuList={list} />
 
 			<img src={url} />
 		</>
