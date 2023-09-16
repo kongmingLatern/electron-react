@@ -8,6 +8,7 @@ import { createLiveConnect } from './module/connect'
 import DanmakuList, { ItemProps } from './pages/DanmakuList'
 import { CMD } from './module/connect/const'
 import AvatarImg from './components/AvatarImg'
+import { handleContent } from './module/danmaku'
 
 function App() {
 	const [url, setUrl] = useState('')
@@ -110,7 +111,7 @@ function App() {
 					const name = info[2][1]
 					danmakuList.push({
 						type: CMD.DANMU_MSG,
-						content,
+						content: handleContent(name, content),
 						name,
 						time: new Date().getTime(),
 						total,
