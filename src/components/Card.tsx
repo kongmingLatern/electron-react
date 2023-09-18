@@ -1,22 +1,34 @@
-import { getFace } from '@/utils'
-import { loadImg } from '@/utils/loadImg'
-import { corsGetResp, get } from '@/utils/request'
-import { useEffect } from 'react'
-
 export default function Card(props) {
 	const {
 		uid,
 		type,
 		avatar,
 		cover,
-		name = '[三月] 直播间舰长专属弹幕',
+		name = '[三月] 直播间专属弹幕',
 		time,
 		content,
+		// 定制信息
+		background = '',
+		headerBackground = '',
+		color = '',
+		headerColor = '',
 	} = props
 
 	return (
-		<div className="mt-1rem rounded-lg ml-0.5rem overflow-hidden card w-96 bg-base-100 shadow-xl bg-red-500 mb-2">
-			<header className="bg-red-800 color-white text-center font-bold">
+		<div
+			className="mt-1rem rounded-lg ml-0.5rem overflow-hidden card w-96 bg-base-100 shadow-xl bg-red-500 mb-2"
+			style={{
+				background,
+				color,
+			}}
+		>
+			<header
+				className="bg-red-800 color-white text-center font-semibold"
+				style={{
+					background: headerBackground,
+					color: headerColor,
+				}}
+			>
 				{name}
 			</header>
 			<figure className="mt-1rem">

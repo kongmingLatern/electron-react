@@ -11,6 +11,11 @@ interface Methods<T> {
 	ENTRY_EFFECT: (args?: T) => any
 	SEND_GIFT: (args?: T) => any
 	LIVE_INTERACTIVE_GAME: (args?: T) => any
+	SUPER_CHAT_MESSAGE: (args?: T) => any
+	INTERACT_WORD: (args?: T) => any
+	LIKE_INFO_V3_CLICK: (args?: T) => any
+	GUARD_BUY: (args?: T) => any
+	POPULARITY_RED_POCKET_NEW: (args?: T) => any
 	heartbeat: (args?: T) => any
 }
 
@@ -18,9 +23,17 @@ export function createLiveConnect(
 	props: ConnectProps,
 	options: Partial<Methods<any>>
 ) {
-	const live = new KeepLiveWS(props?.roomId as number, {
+	const authBody = {
+		...props.authBody,
 		uid: props.uid,
-	})
+		key: props.token,
+		buvid: props.buvid,
+	}
+
+	const live = new KeepLiveWS(
+		props?.roomId as number,
+		authBody
+	)
 
 	live.on('open', () => {
 		console.log('已连接直播弹幕服务器')
@@ -32,26 +45,44 @@ export function createLiveConnect(
 		options.live?.()
 		// addInfoDanmaku(`已连接直播间 ${props.room}`)
 	})
+	live.on(CMD.POPULARITY_RED_POCKET_NEW, data => {
+		options.POPULARITY_RED_POCKET_NEW?.(data)
+	})
+	// live.send('')
 	live.on('msg', data => {
 		console.log('收到消息', data)
 		options.msg?.(data)
 		// addInfoDanmaku(`已连接直播间 ${props.room}`)
 	})
+	live.on(CMD.GUARD_BUY, data => {
+		options.GUARD_BUY?.(data)
+	})
+	// 直播间点赞
+	live.on(CMD.LIKE_INFO_V3_CLICK, data => {
+		options.LIKE_INFO_V3_CLICK?.(data)
+	})
+	live.on(CMD.INTERACT_WORD, data => {
+		options.INTERACT_WORD?.(data)
+	})
+	live.on(CMD.SUPER_CHAT_MESSAGE, data => {
+		console.log('SUPER_CHAT', data)
+		options.SUPER_CHAT_MESSAGE?.(data)
+	})
 	live.on(CMD.SEND_GIFT, data => {
 		options.SEND_GIFT?.(data)
 	})
 	live.on('ENTRY_EFFECT', data => {
-		console.log('进场特效', data)
+		// console.log('进场特效', data)
 		options.ENTRY_EFFECT?.(data)
 	})
 
 	live.on('DANMU_MSG', data => {
-		console.log('弹幕', data)
+		// console.log('弹幕', data)
 		options.DANMU_MSG?.(data)
 	})
 
 	live.on('LIVE_INTERACTIVE_GAME', data => {
-		console.log('INTERACTIVE_GAME', data)
+		// console.log('INTERACTIVE_GAME', data)
 		options.LIVE_INTERACTIVE_GAME?.(data)
 	})
 

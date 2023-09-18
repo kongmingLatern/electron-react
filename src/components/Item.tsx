@@ -1,5 +1,5 @@
 import { CMD } from '@/module/connect/const'
-import { getFace } from '@/utils'
+import { getFormatTime } from '@/utils'
 import { ItemProps } from '@/pages/DanmakuList'
 import '@/assets/animation.scss'
 import '@/assets/item.scss'
@@ -8,20 +8,10 @@ import Avatar from '@/assets/avatar.jpeg'
 import Call from '@/assets/call.png'
 import Love from '@/assets/love.png'
 import Wa from '@/assets/wa.png'
+import Zan from '@/assets/zan.png'
 
 export default function Item(props: Partial<ItemProps>) {
 	const { uid, type, avatar, name, time, content } = props
-	const date = new Date(time as number)
-	const hours = date.getHours()
-	const mins = date.getMinutes()
-	const seconds = date.getSeconds()
-	const formatFn = num => {
-		if (num < 10) {
-			return `0${num}`
-		} else {
-			return num
-		}
-	}
 
 	const handleType = () => {
 		switch (type) {
@@ -47,25 +37,19 @@ export default function Item(props: Partial<ItemProps>) {
 		}
 	}
 
-	const getImg = () => {
-		if (avatar && uid) {
-			return getFace(uid)
-		}
-		return Avatar
-	}
-
 	return (
-		<li className="max-w-[500px] flex flex-col slide-up-animation ">
+		<li className="max-w-[500px] enter-cover flex flex-col slide-up-animation cover">
 			{type === CMD.ENTRY_EFFECT && (
 				<Card
 					{...{
 						...props,
-						name: '[三月] 直播间舰长专属弹幕',
+						name: '[三月] 直播间进场特效弹幕',
 						cover: Call,
 					}}
 				/>
 			)}
-			{type === CMD.SEND_GIFT && (
+			{(type === CMD.SEND_GIFT ||
+				type === CMD.POPULARITY_RED_POCKET_NEW) && (
 				<Card
 					{...{
 						...props,
@@ -82,6 +66,9 @@ export default function Item(props: Partial<ItemProps>) {
 						avatar,
 						name: '醒目留言',
 						cover: Wa,
+						background: '#a40052',
+						headerBackground: 'yellow',
+						headerColor: 'black',
 					}}
 				/>
 			)}
@@ -89,21 +76,51 @@ export default function Item(props: Partial<ItemProps>) {
 				<div className="chat chat-start ">
 					<div className="chat-image avatar">
 						<div className="w-10 rounded-full">
-							<img src={Avatar} />
+							<img src={avatar} />
 						</div>
 					</div>
 					<div className="color-white chat-header">
 						{name}{' '}
 						<time className="text-xs opacity-50">
-							{formatFn(hours) +
-								':' +
-								formatFn(mins) +
-								':' +
-								formatFn(seconds)}
+							{getFormatTime(time)}
 						</time>
 					</div>
 					<div
-						className={`max-w-[400px] color-white rounded-15px px-20px h-40px lh-40px overflow-hidden flex flex-wrap background`}
+						className={`max-w-[400px] px-20px color-white rounded-15px min-h-40px lh-40px overflow-hidden flex flex-wrap background`}
+						style={handleType()}
+					>
+						{content}
+					</div>
+				</div>
+			)}
+			{type === CMD.LIKE_INFO_V3_CLICK && (
+				<Card
+					{...{
+						...props,
+						name: '收到点赞信息',
+						cover: Zan,
+						// background: '#052083',
+						background: '#293a79',
+						headerBackground: '#511482e0720f',
+					}}
+				/>
+			)}
+			{type === CMD.GUARD_BUY && (
+				<Card
+					{...{
+						...props,
+						name: '上舰通知',
+						cover: Wa,
+						background:
+							'linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%);',
+						headerBackground: 'crimson',
+					}}
+				/>
+			)}
+			{type === CMD.INTERACT_WORD && (
+				<div className="chat chat-start ">
+					<div
+						className={`chat-bubble max-w-[400px] px-20px color-white rounded-15px min-h-40px overflow-hidden flex flex-wrap background`}
 						style={handleType()}
 					>
 						{content}
