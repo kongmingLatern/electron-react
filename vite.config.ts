@@ -1,6 +1,6 @@
 import { rmSync } from 'node:fs'
 import path from 'node:path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
@@ -16,6 +16,17 @@ export default defineConfig(({ command }) => {
 	const sourcemap = isServe || !!process.env.VSCODE_DEBUG
 
 	return {
+		test: {
+			globals: true,
+			exclude: [
+				'node_modules',
+				'dist',
+				'.idea',
+				'.git',
+				'.cache',
+				'e2e',
+			],
+		},
 		resolve: {
 			alias: {
 				'@': path.join(__dirname, 'src'),
@@ -81,8 +92,8 @@ export default defineConfig(({ command }) => {
 			renderer(),
 		],
 		server: {
-			port: 8000,
-			origin: 'http://localhost:8000',
+			port: 8800,
+			origin: 'http://localhost:8800',
 			proxy: {
 				'/api': {
 					// 这里配置要代理的路径前缀
