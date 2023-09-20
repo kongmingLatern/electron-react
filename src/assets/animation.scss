@@ -8,6 +8,21 @@
 		opacity: 1;
 	}
 }
+@keyframes slideFromUp {
+	from {
+		transform: translateY(20%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
 .slide-up-animation {
 	animation: slideFromBottom 0.5s ease-in-out;
+}
+
+.slide-from-bottom {
+	transition: all 0.5s;
+	animation: slideFromUp 0.5s ease-in-out;
 }
