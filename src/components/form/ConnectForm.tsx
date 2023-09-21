@@ -55,6 +55,7 @@ const App: React.FC = () => {
 		// showModal()
 		// setValue(values.roomId)
 		console.log('values.roomId', values.roomId)
+
 		navigate('/home', {
 			state: values,
 		})

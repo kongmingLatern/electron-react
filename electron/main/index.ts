@@ -54,13 +54,15 @@ const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
+
 async function createWindow() {
 	win = new BrowserWindow({
-		title: 'Main window',
-		icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
+		title: '三月专属弹幕姬',
+		icon: join(process.env.VITE_PUBLIC, '80.png'),
 		alwaysOnTop: true,
 		minWidth: 800,
-		minHeight: 500,
+		maxWidth: 1000,
+		minHeight: 700,
 		webPreferences: {
 			preload,
 			// NOTE: Enable nodeIntegration and disable contextIsolation is not secure in production
