@@ -8,6 +8,7 @@ import Call from '@/assets/call.png'
 import Love from '@/assets/love.png'
 import Wa from '@/assets/wa.png'
 import Zan from '@/assets/zan.png'
+import wa from '@/assets/wa.gif'
 
 export default function Item(props: Partial<ItemProps>) {
 	const { uid, type, avatar, name, time, content } = props
@@ -85,10 +86,18 @@ export default function Item(props: Partial<ItemProps>) {
 						</time>
 					</div>
 					<div
-						className={`max-w-[400px] px-20px color-white rounded-15px min-h-40px lh-40px overflow-hidden flex flex-wrap background`}
+						className={`relative max-w-[600px] min-w-[300px] px-20px color-white rounded-15px min-h-40px lh-40px flex flex-wrap background popup`}
 						style={handleType()}
 					>
 						{content}
+
+						<div className="absolute right-[-20px] top-[-30px] z-10">
+							<img src={wa} width={50} height={50}
+								style={{
+									transform: 'rotate(30deg)'
+								}}
+							/>
+						</div>
 					</div>
 				</div>
 			)}
@@ -119,7 +128,7 @@ export default function Item(props: Partial<ItemProps>) {
 			{type === CMD.INTERACT_WORD && (
 				<div className="chat chat-start ">
 					<div
-						className={`chat-bubble max-w-[400px] px-20px color-white rounded-15px min-h-40px overflow-hidden flex flex-wrap background`}
+						className={`chat-bubble max-w-[500px] px-20px color-white rounded-15px min-h-40px overflow-hidden flex flex-wrap background`}
 						style={handleType()}
 					>
 						{content}
