@@ -32,9 +32,9 @@ function App() {
 			{
 				roomId: roomId || location.state.roomId,
 				// platform: 'web',
-				uid: 108569350,
-				token:
-					'KqElYY9b02Pz-tqNvDryyjKDgrzSaVRDk8nFhmvdFKwxpGBsDycZSVIFxl4VLFUlpzCfV3yadvCIGO-S5rdseoY9QX_D00hF-Bn9HioIHAZsH_Ha1gwbY9rsvCuSWMGgyghQohfjaKgvvXAPvkY9tUF8',
+				// uid: 108569350,
+				// token:
+				// 	'KqElYY9b02Pz-tqNvDryyjKDgrzSaVRDk8nFhmvdFKwxpGBsDycZSVIFxl4VLFUlpzCfV3yadvCIGO-S5rdseoY9QX_D00hF-Bn9HioIHAZsH_Ha1gwbY9rsvCuSWMGgyghQohfjaKgvvXAPvkY9tUF8',
 				// uid: 1,
 				// buvid:
 				// 	'1F5EA0BF-8AB9-4EE7-29F8-79B01EDE63A833155infoc',
@@ -171,30 +171,41 @@ function App() {
 
 					const content = info[1]
 					const name = info[2][1]
+
 					danmakuList.push({
 						type: CMD.DANMU_MSG,
 						avatar: url,
 						content: handleContent(name, content),
+						// content: (
+						// 	<span
+						// 		style={{
+						// 			color: 'white',
+						// 		}}
+						// 	>
+						// 		{`123留言说:`}
+						// 		<br />
+						// 		<span className="color-white font-bold text-20px">
+						// 			sfadifsoafoiossdaa
+						// 		</span>
+						// 	</span>
+						// ),
+						// content: (
+						// 	// <span className="color-white">
+						// 	// 	<span className="text-lg color-darkblue font-semibold">{`${name}`}</span>{' '}
+						// 	// 	送出了 {gift}
+						// 	// 	{' * '}
+						// 	// 	{number} 个月!
+						// 	// 	<br />
+						// 	// 	<span className="color-white font-semibold">
+						// 	// 		总价值: {totalPrice} 电池
+						// 	// 	</span>
+						// 	// </span>
+						// ),
 						name,
 						time: new Date().getTime(),
 						total,
 					})
 					setList([...danmakuList])
-
-					// const reader = new FileReader()
-
-					// 设置 FileReader 完成后的回调函数
-					// reader.onload = function () {
-					// 将 Blob 转换为 Base64 编码的字符串
-					// const base64String = reader.result.split(',')[1]
-					// const base64String = btoa(url)
-					// )
-					// 在这里您可以使用 base64String 进行任何操作，例如将其设置为图像的 src
-					// console.log(base64String)
-					// }
-
-					// 读取 Blob 数据，并以DataURL方式读取
-					// console.log(reader.readAsDataURL(blob))
 				},
 				SUPER_CHAT_MESSAGE: res => {
 					const {
@@ -218,7 +229,11 @@ function App() {
 									background: background_color,
 								}}
 							>
-								{`${user_info.uname}留言说: ${message}`}
+								{`${user_info.uname}留言说:`}
+								<br />
+								<span className="color-white text-20px">
+									{message}
+								</span>
 							</span>
 						),
 						name: user_info.uname,
@@ -263,11 +278,11 @@ function App() {
 						content: (
 							<span>
 								{`重大通知! 监测到用户${user} 在本直播间开通了 ${
-									guard_level === 1
+									guard_level === 3
 										? '舰长'
 										: guard_level === 2
 										? '提督'
-										: guard_level === 3
+										: guard_level === 1
 										? '总督'
 										: ''
 								} * ${num}个月!`}
@@ -287,7 +302,7 @@ function App() {
 
 					const totalPrice = (
 						<span className="text-lg color-yellow">
-							{price / 100}
+							{price}
 						</span>
 					)
 					const gift = (
