@@ -3,6 +3,7 @@ import Item from '@/components/Item'
 import { CMD } from '@/module/connect/const'
 import '@/assets/item.scss'
 import RankHeader from '@/components/RankHeader'
+import classNames from 'classnames'
 
 export interface ItemProps {
 	type?: CMD
@@ -71,9 +72,15 @@ export default function DanmakuList(props) {
 	return (
 		<div
 			ref={containerRef}
-			className={`relative max-w-[600px] min-w-[600px] max-h-[700px] min-h-[700px] cover ${
+			className={classNames(
+				'relative',
+				'max-w-[600px]',
+				'min-w-[600px]',
+				'max-h-[700px]',
+				'min-h-[700px]',
+				'cover',
 				isOverflow ? 'overflow-y-scroll' : ''
-			}`}
+			)}
 			onMouseOver={() => {
 				setMouseOver(true)
 			}}
@@ -88,7 +95,7 @@ export default function DanmakuList(props) {
 				)}
 			/>
 			<ul
-				className="p-0 m-0"
+				className={classNames('p-0', 'm-0')}
 				style={{
 					transition: 'all .5s',
 				}}
