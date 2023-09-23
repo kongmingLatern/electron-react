@@ -9,8 +9,6 @@ const api = axios.create({
 })
 
 api.interceptors.request.use(config => {
-	// config.headers['appkey'] = appKey
-	// config.headers['sign'] = sign
 	return config
 })
 
