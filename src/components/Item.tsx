@@ -9,6 +9,8 @@ import Love from '@/assets/love.png'
 import Wa from '@/assets/wa.png'
 import Zan from '@/assets/zan.png'
 import wa from '@/assets/wa.gif'
+import Bat from '@/assets/bat.gif'
+import Avatar from '@/assets/avatar.webp'
 
 export default function Item(props: Partial<ItemProps>) {
 	const { uid, type, avatar, name, time, content } = props
@@ -73,10 +75,19 @@ export default function Item(props: Partial<ItemProps>) {
 				/>
 			)}
 			{type === CMD.DANMU_MSG && (
-				<div className="chat chat-start ">
+				<div className="chat chat-start pl-[0.5rem]">
 					<div className="chat-image avatar">
-						<div className="w-10 rounded-full">
-							<img src={avatar} />
+						<div className="w-[3rem]">
+							<img src={avatar} className="rounded-full" />
+							<img
+								src={Avatar}
+								style={{
+									width: 70,
+									height: 70,
+									minWidth: 70,
+								}}
+								className="absolute top-[-12px] left-[-10px]"
+							/>
 						</div>
 					</div>
 					<div className="color-white chat-header">
@@ -91,10 +102,44 @@ export default function Item(props: Partial<ItemProps>) {
 					>
 						{content}
 
-						<div className="absolute right-[-20px] top-[-30px] z-10">
-							<img src={wa} width={50} height={50}
+						{/* <div className="absolute right-[-10px] top-[50%] translate-x-[-50%] translate-y-[-50%] z-10">
+							<img
+								src={Pank}
+								width={40}
+								height={40}
 								style={{
-									transform: 'rotate(30deg)'
+									transform: 'rotate(0deg)',
+								}}
+							/>
+						</div> */}
+						<div className="absolute left-[200px] bottom-[5px] z-10 slide-up-reverse">
+							<img
+								src={Bat}
+								width={50}
+								height={50}
+								style={{
+									transform: 'rotate(45deg)',
+								}}
+							/>
+						</div>
+
+						<div className="absolute right-[-15px] bottom-[5px] z-11 slide-up">
+							<img
+								src={Bat}
+								width={50}
+								height={50}
+								style={{
+									transform: 'rotate(-45deg)',
+								}}
+							/>
+						</div>
+						<div className="absolute right-[-20px] top-[-30px] z-10">
+							<img
+								src={wa}
+								width={50}
+								height={50}
+								style={{
+									transform: 'rotate(35deg)',
 								}}
 							/>
 						</div>
